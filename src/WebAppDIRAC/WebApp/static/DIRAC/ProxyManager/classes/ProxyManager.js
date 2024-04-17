@@ -53,10 +53,6 @@ Ext.define("DIRAC.ProxyManager.classes.ProxyManager", {
       name: "UserDN",
     },
     {
-      name: "UserGroup",
-      type: "auto",
-    },
-    {
       name: "ExpirationTime",
       type: "date",
       dateFormat: "Y-m-d H:i:s",
@@ -89,13 +85,9 @@ Ext.define("DIRAC.ProxyManager.classes.ProxyManager", {
 
     var selectors = {
       username: "User",
-      usergroup: "Group",
     };
 
-    var map = [
-      ["username", "username"],
-      ["usergroup", "usergroup"],
-    ];
+    var map = [["username", "username"]];
 
     me.leftPanel = new Ext.create("Ext.dirac.utils.DiracBaseSelector", {
       scope: me,
@@ -159,13 +151,6 @@ Ext.define("DIRAC.ProxyManager.classes.ProxyManager", {
         dataIndex: "UserDN",
         properties: {
           width: 350,
-          sortable: true,
-        },
-      },
-      Group: {
-        dataIndex: "UserGroup",
-        properties: {
-          width: 100,
           sortable: true,
         },
       },
