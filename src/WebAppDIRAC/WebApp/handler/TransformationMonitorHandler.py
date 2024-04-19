@@ -267,16 +267,15 @@ class TransformationMonitorHandler(WebHandler):
     def __getLoggingInfo(self, transid):
         if (result := TransformationClient().getTransformationLogging(transid))["OK"]:
             if len(data := result["Value"]) > 0:
-                dndb = {}
+                userdb = {}
                 callback = []
-                if (result := gConfig.getSections("/Security/Users"))["OK"]:
-                    for user in result["Value"]:
-                        dndb[gConfig.getValue(f"/Security/Users/{user}/DN")] = user
+                if (result := gConfig.getSections("/Registry/Users"))["OK"]:
+                    userdb = result["Value"]
                 for i in data:
-                    DN = i["AuthorDN"]
-                    i["AuthorDN"] = dndb.get(DN, DN)
+                    user = i["Author"]
+                    i["Author"] = userdb.get(user, user)
                     date = TimeUtilities.toString(i["MessageDate"])
-                    callback.append([i["Message"], date, i["AuthorDN"]])
+                    callback.append([i["Message"], date, i["Author"]])
                 return {"success": "true", "result": callback}
             return {"success": "false", "error": "Nothing to display"}
         return {"success": "false", "error": result["Message"]}
